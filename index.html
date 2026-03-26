@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PickTrace — Receiving Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Open Sans',Arial,sans-serif;color:#333;line-height:1.7;font-size:14px;font-weight:400;background:#fff}
+img{max-width:100%;height:auto;display:block}
+a{color:#2ea3f2;text-decoration:none}
+
+/* Header */
+.pt-header{background:#1a1a2e;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.pt-logo{font-size:18px;font-weight:700;color:#fff;letter-spacing:1.5px;text-transform:uppercase}
+.pt-header-sub{font-size:12px;color:rgba(255,255,255,0.5);font-weight:400;margin-left:12px;letter-spacing:0.3px}
+.pt-nav{display:flex;gap:6px}
+.pt-nav button{padding:8px 16px;font-size:12px;font-weight:600;color:rgba(255,255,255,0.6);background:none;border:1px solid transparent;border-radius:6px;cursor:pointer;transition:all .2s;font-family:inherit}
+.pt-nav button:hover{color:#fff;background:rgba(255,255,255,0.08)}
+.pt-nav button.active{color:#fff;background:rgba(46,163,242,0.15);border-color:rgba(46,163,242,0.3)}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);padding:80px 40px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;right:0;bottom:0;left:0;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="80" cy="20" r="40" fill="rgba(46,163,242,0.03)"/><circle cx="20" cy="80" r="30" fill="rgba(46,163,242,0.02)"/></svg>');background-size:cover}
+.hero-label{font-size:13px;font-weight:700;color:#2ea3f2;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;position:relative}
+.hero h1{font-size:36px;font-weight:700;color:#fff;line-height:1.3;max-width:680px;margin:0 auto 16px;position:relative}
+.hero p{font-size:16px;color:rgba(255,255,255,0.65);max-width:560px;margin:0 auto;line-height:1.7;position:relative}
+
+/* Sections */
+.container{max-width:1100px;margin:0 auto;padding:0 40px}
+.section{padding:70px 0;border-bottom:1px solid #eee}
+.section:last-child{border-bottom:none}
+.section-alt{background:#f8f9fb}
+
+/* Feature rows — alternating text + image */
+.feature{display:flex;align-items:center;gap:80px}
+.feature-reverse{flex-direction:row-reverse}
+.feature-text{flex:1 1 0;min-width:0}
+.feature-media{flex:0 0 auto;min-width:0;display:flex;justify-content:center;align-items:center}
+
+.feature-label{font-size:11px;font-weight:700;color:#2ea3f2;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px}
+.feature-text h2{font-size:26px;font-weight:700;color:#1a1a2e;line-height:1.3;margin-bottom:14px}
+.feature-text p{font-size:14px;color:#555;line-height:1.8;margin-bottom:16px}
+.steps{list-style:none;margin:0;padding:0}
+.step{display:flex;gap:12px;align-items:flex-start;padding:8px 0}
+.step-num{width:24px;height:24px;border-radius:50%;background:#2ea3f2;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-text{font-size:13px;color:#444;line-height:1.7}
+.step-sub{font-size:12px;color:#888;margin-top:3px;line-height:1.6}
+
+/* Screenshot frame — fluid, constrained max */
+.phone-frame{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,0.1);border:1px solid #e0e0e0;width:min(280px,38vw);aspect-ratio:280/510;flex-shrink:0}
+.phone-frame img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+
+/* Desktop screenshot frame */
+.browser-frame{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,0.1);border:1px solid #e0e0e0}
+.browser-bar{display:flex;align-items:center;gap:6px;padding:8px 14px;background:#f5f5f5;border-bottom:1px solid #e0e0e0}
+.browser-dot{width:8px;height:8px;border-radius:50%}
+.browser-dot.r{background:#ff5f57}
+.browser-dot.y{background:#febc2e}
+.browser-dot.g{background:#28c840}
+.browser-bar-url{flex:1;margin-left:10px;height:18px;background:#e8e8e8;border-radius:4px}
+.browser-frame img{width:100%;display:block}
+
+/* Multi-screenshot layout */
+.phone-group{display:flex;gap:14px;justify-content:center;align-items:flex-start}
+.phone-group .phone-frame{width:min(220px,28vw);aspect-ratio:220/400}
+.phone-group.triple .phone-frame{width:min(160px,18vw);aspect-ratio:160/305}
+
+/* Tip callout */
+.tip{background:#e8f4fd;border-left:3px solid #2ea3f2;padding:12px 16px;border-radius:0 8px 8px 0;font-size:12px;color:#1a1a2e;margin:16px 0;line-height:1.7}
+.tip strong{color:#0f3460}
+.warning{background:#fff3e0;border-left:3px solid #f57c00;padding:12px 16px;border-radius:0 8px 8px 0;font-size:12px;color:#4e342e;margin:16px 0;line-height:1.7}
+.critical{background:#fce4ec;border-left:3px solid #c62828;padding:12px 16px;border-radius:0 8px 8px 0;font-size:12px;color:#4a1010;margin:16px 0;line-height:1.7}
+
+/* Barcode format highlight */
+.format-block{background:#f0f4f8;border-radius:10px;padding:20px 24px;margin:16px 0;text-align:center}
+.format-code{font-family:'Courier New',monospace;font-size:28px;font-weight:700;color:#1a1a2e;letter-spacing:2px;margin-bottom:6px}
+.format-desc{font-size:12px;color:#666;line-height:1.6}
+
+/* Decision tree */
+.dtree{max-width:600px;margin:24px auto 0}
+.dt-row{display:flex;align-items:stretch;gap:12px;margin-bottom:12px}
+.dt-q{background:#1a1a2e;color:#fff;padding:14px 20px;border-radius:10px;font-size:14px;font-weight:600;text-align:center;width:100%}
+.dt-answer{flex:1;border:1px solid #e0e0e0;border-radius:10px;padding:18px 20px;font-size:13px;color:#555;line-height:1.65;background:#fff;display:flex;flex-direction:column;gap:10px}
+.dt-answer strong{color:#1a1a2e;font-size:14px}
+.dt-tag{display:inline-block;padding:5px 16px;border-radius:100px;font-size:12px;font-weight:700;width:fit-content;letter-spacing:0.3px}
+.dt-tag.yes{background:#e8f5e9;color:#1b5e20}
+.dt-tag.no{background:#fce4ec;color:#c62828}
+.dt-tag.unsure{background:#fff3e0;color:#e65100}
+.dt-result{font-size:13px;color:#666;line-height:1.7}
+.dt-result strong{font-size:13px;color:#1a1a2e}
+.dt-sub{background:#f0f4f8;border-radius:10px;padding:14px 16px;font-size:14px;font-weight:600;color:#1a1a2e;text-align:center;width:100%}
+.dt-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+
+/* Scope cards */
+.scope-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0}
+.scope-card{border:1px solid #e8e8e8;border-radius:10px;padding:16px;background:#fff}
+.scope-badge{display:inline-block;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;margin-bottom:8px;letter-spacing:0.5px}
+.scope-card h4{font-size:13px;font-weight:600;color:#1a1a2e;margin-bottom:4px}
+.scope-card p{font-size:12px;color:#666;line-height:1.6}
+
+/* Status description row */
+.status-desc-row{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:12px}
+.status-desc-item{text-align:center;padding:10px 8px;font-size:12px;color:#666;line-height:1.5}
+.status-desc-item strong{display:block;font-size:12px;color:#1a1a2e;margin-bottom:2px}
+
+/* Permissions table */
+.perm-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #eee;font-size:13px}
+.perm-row:last-child{border-bottom:none}
+.perm-name{font-weight:600;color:#1a1a2e}
+.perm-desc{color:#888;font-size:12px;margin-top:2px}
+.perm-badge{padding:4px 12px;border-radius:100px;font-size:11px;font-weight:600}
+
+/* CTA button */
+.btn{display:inline-block;padding:12px 28px;background:#2ea3f2;color:#fff;font-size:13px;font-weight:600;border-radius:6px;border:none;cursor:pointer;font-family:inherit;transition:background .2s}
+.btn:hover{background:#1b8fd8}
+
+/* ── Laptop breakpoint (1024–1280px) ── */
+@media(max-width:1280px){
+  .feature,.feature-reverse{gap:30px}
+  .phone-frame{width:min(240px,32vw)}
+  .phone-group .phone-frame{width:min(190px,24vw)}
+  .phone-group.triple .phone-frame{width:min(140px,16vw)}
+}
+
+/* ── Tablet/small laptop — stack vertically ── */
+@media(max-width:900px){
+  .feature,.feature-reverse{flex-direction:column;gap:30px}
+  .feature-media{width:100%;justify-content:center}
+  .phone-frame{width:min(280px,70vw);aspect-ratio:280/510}
+  .phone-group .phone-frame{width:min(200px,42vw);aspect-ratio:200/365}
+  .phone-group.triple .phone-frame{width:min(160px,30vw);aspect-ratio:160/305}
+  .dt-row,.dt-grid{flex-direction:column;grid-template-columns:1fr}
+  .scope-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ── Mobile ── */
+@media(max-width:600px){
+  .hero{padding:50px 20px}
+  .hero h1{font-size:26px}
+  .container{padding:0 20px}
+  .section{padding:40px 0}
+  .pt-header{padding:14px 16px;flex-wrap:wrap;gap:10px}
+  .pt-nav{overflow-x:auto;flex-wrap:nowrap}
+  .scope-grid{grid-template-columns:1fr}
+  .status-desc-row{grid-template-columns:repeat(5,1fr);font-size:10px}
+  .phone-group{flex-wrap:wrap}
+  .phone-group.triple .phone-frame{width:min(140px,42vw)}
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="pt-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <img src="https://picktrace.com/wp-content/uploads/2022/03/Web22-PicktraceLogo80.png" alt="PickTrace" style="height:28px">
+    <span class="pt-header-sub">Receiving Guide</span>
+  </div>
+  <nav class="pt-nav">
+    <button class="active" onclick="switchTab('field',this)">Field App</button>
+    <button onclick="switchTab('receiving',this)">Receiving App</button>
+    <button onclick="switchTab('office',this)">Office</button>
+  </nav>
+</div>
+
+<!-- ═══ FIELD APP TAB ═══ -->
+<div id="tab-field" class="tab-panel">
+
+<!-- Hero -->
+<div class="hero" id="sec-overview">
+  <div class="hero-label">Field App</div>
+  <h1>Create Production Records &amp; Field Tickets</h1>
+  <p>Used by crews and foremen in the field to log harvested units and group them into scannable field tickets before the load is built.</p>
+</div>
+
+<!-- Section 1: Decision Tree + Overview -->
+<div class="section" id="sec-decision">
+  <div class="container">
+    <div style="max-width:760px;margin:0 auto">
+      <div class="feature-label" style="text-align:center">Setup</div>
+      <h2 style="font-size:26px;font-weight:700;color:#1a1a2e;margin-bottom:14px;text-align:center">Should you use field tickets?</h2>
+      <p style="font-size:14px;color:#555;text-align:center;margin-bottom:8px">The receiving product leans on production records within PickTrace. If those records have a unique ID, receiving can reference them directly. If not, field tickets bridge the gap.</p>
+      <div class="dtree">
+        <div class="dt-row"><div class="dt-q">Do production records have a unique ID (tag, label, or paired label)?</div></div>
+        <div class="dt-row">
+          <div class="dt-answer">
+            <span class="dt-tag no">No</span>
+            <div class="dt-result"><strong>Enable field tickets.</strong> Without a unique ID there is nothing for receiving to scan. Field tickets group records together so they become trackable.</div>
+          </div>
+          <div class="dt-answer">
+            <span class="dt-tag yes">Yes</span>
+            <div class="dt-result">Move to the next question below.</div>
+          </div>
+        </div>
+        <div class="dt-row"><div class="dt-sub">Does the grower need to know which specific unit is on which pallet?</div></div>
+        <div class="dt-row">
+          <div class="dt-answer">
+            <span class="dt-tag yes">Yes</span>
+            <div class="dt-result"><strong>Enable field tickets.</strong> Example: strawberry growers building pallets in the field.</div>
+          </div>
+          <div class="dt-answer">
+            <span class="dt-tag no">No</span>
+            <div class="dt-result"><strong>Not required.</strong> Pallets are created by scanning a single reference production unit's unique ID.</div>
+          </div>
+        </div>
+      </div>
+      <div class="tip"><strong>Field tickets are independent of receiving.</strong> They can be enabled for any customer at any time, even if they are not using receiving. Managed at the work bundle level.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 2: Field Tickets -->
+<div class="section section-alt" id="sec-field-tickets">
+  <div class="container">
+    <div class="feature feature-reverse">
+      <div class="feature-text">
+        <div class="feature-label">Field Tickets</div>
+        <h2>Digitize your harvest release forms</h2>
+        <p>Start here. The Field App is where you create the actual production records that the Receiving App will use. Most growers already use paper field tickets — the process is the same, just with a scannable barcode added.</p>
+        <p>Use any barcode generator to create your field ticket barcodes before heading to the field. The barcodes must follow this format — we provide the format, not the barcode itself.</p>
+        <div class="format-block">
+          <div class="format-code">#FT032501</div>
+          <div class="format-desc"><strong>#FT</strong> followed by an alphanumeric string (e.g., date + sequence number). This format is mandatory — no exceptions.</div>
+        </div>
+        <ul class="steps">
+          <li class="step"><div class="step-num">1</div><div><div class="step-text">Enable field ticket tracking in the work bundle (Production tab).</div></div></li>
+          <li class="step"><div class="step-num">2</div><div><div class="step-text">The app requires a field ticket to be selected before any scanning. A dropdown and <strong>+</strong> button appear at the top of the screen.</div></div></li>
+          <li class="step"><div class="step-num">3</div><div><div class="step-text">Scan the pre-printed FT barcode, then scan employee badges to credit units (totes, bins) to that ticket.</div><div class="step-sub">For some table grape growers, the field ticket represents a trailer or a pallet on the trailer.</div></div></li>
+          <li class="step"><div class="step-num">4</div><div><div class="step-text">To switch tickets, scan a new FT barcode. Any unsaved record in the queue moves to the new ticket automatically.</div><div class="step-sub">Records that have already been saved stay on the original field ticket.</div></div></li>
+          <li class="step"><div class="step-num">5</div><div><div class="step-text">Optionally set a max field ticket count on the pack style (e.g., 56 totes per field ticket). The cap is determined by the first unit scanned onto the ticket.</div></div></li>
+          <li class="step"><div class="step-num">6</div><div><div class="step-text">Sync data to the cloud before switching to the Receiving App.</div></div></li>
+        </ul>
+        <div class="tip"><strong>Pre-print your barcodes.</strong> Creating tickets manually in the app generates long offline-compatible codes that are harder to manage. Generate and print them ahead of time.</div>
+      </div>
+      <div class="feature-media">
+        <div class="phone-frame">
+          <img src="images/Screenshot 2026-03-25 112410.png" alt="Field app totes screen — FT dropdown selected, employee credits visible">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /tab-field -->
+
+<!-- ═══ RECEIVING APP TAB ═══ -->
+<div id="tab-receiving" class="tab-panel" style="display:none">
+
+<div class="hero">
+  <div class="hero-label">Receiving App</div>
+  <h1>Build &amp; Track Loads from the Field</h1>
+  <p>Used by third-party drivers to create load tickets, scan field tickets, and share load summaries with the receiving team at the destination.</p>
+</div>
+
+<!-- Section 3: Building a Load -->
+<div class="section" id="sec-load">
+  <div class="container">
+    <div class="feature">
+      <div class="feature-text">
+        <div class="feature-label">Load Creation</div>
+        <h2>Build a load in under a minute</h2>
+        <p>The Receiving App is used by third-party drivers to build load tickets and scan field tickets. In most cases, the driver — not the crew — is the primary user.</p>
+        <ul class="steps">
+          <li class="step"><div class="step-num">1</div><div><div class="step-text">Open the Receiving App and tap <strong>New</strong> to create a load ticket.</div></div></li>
+          <li class="step"><div class="step-num">2</div><div><div class="step-text">Complete the logistics screen: destination site, current site/location (where fruit is being picked up), driver name, company, and trailer ID.</div><div class="step-sub">All fields are optional and take under 30 seconds. Driver, company, and trailer ID are typed in as free text. After the first load, these fields auto-populate — the driver only fills them once.</div></div></li>
+          <li class="step"><div class="step-num">3</div><div><div class="step-text">Tap <strong>Save and Continue</strong>, then scan your FT barcodes. Associated units appear on the load instantly — even if the device is offline.</div></div></li>
+          <li class="step"><div class="step-num">4</div><div><div class="step-text">Tap <strong>Finish</strong> when all field tickets have been scanned.</div></div></li>
+        </ul>
+        <div class="tip"><strong>User-based login.</strong> The Receiving App requires user credentials (email/password), not an employee badge. It is a separate app from the PT Field App, available on the App Store and Play Store. A user account must be created for every person who needs access. The destination list can be limited by the user's role permissions.</div>
+      </div>
+      <div class="feature-media">
+        <div class="phone-group">
+          <div class="phone-frame">
+            <img src="images/image.png" alt="New Load Ticket - blank logistics form">
+          </div>
+          <div class="phone-frame">
+            <img src="images/Screenshot 2026-03-25 113235.png" alt="New Load Ticket - filled logistics form">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 4: Scanning Field Tickets -->
+<div class="section section-alt">
+  <div class="container">
+    <div class="feature feature-reverse">
+      <div class="feature-text">
+        <div class="feature-label">Scanning</div>
+        <h2>Scan field tickets onto the load</h2>
+        <p>After completing logistics, scan the FT barcodes created in the field app. Each scan pulls in all associated units — crew, block, variety, and tote count — instantly.</p>
+        <ul class="steps">
+          <li class="step"><div class="step-num">1</div><div><div class="step-text">Tap <strong>+ Add</strong> or use the scanner to add field tickets to the load.</div></div></li>
+          <li class="step"><div class="step-num">2</div><div><div class="step-text">Associated units appear on the load showing crew, block, and count per field ticket.</div></div></li>
+          <li class="step"><div class="step-num">3</div><div><div class="step-text">Data is cached from the field app sync — this works even if the device is offline.</div></div></li>
+        </ul>
+        <div class="tip"><strong>Device Offline?</strong> The app will show a loading indicator to the right of the Field Ticket ID — just wait for it to finish loading before proceeding.</div>
+      </div>
+      <div class="feature-media">
+        <div class="phone-group">
+          <div class="phone-frame">
+            <img src="images/Screenshot 2026-03-25 113315.png" alt="Add Field Tickets - empty screen">
+          </div>
+          <div class="phone-frame">
+            <img src="images/Screenshot 2026-03-25 113341.png" alt="Two field tickets added to load">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 5: Without Field Tickets -->
+<div class="section" id="sec-no-ft">
+  <div class="container">
+    <div class="feature">
+      <div class="feature-text">
+        <div class="feature-label">Reference ID</div>
+        <h2>Scanning without field tickets</h2>
+        <p>For table grape growers, units aren't grouped onto a field ticket. Instead, scan any single unit on the pallet — the app will ask how many are just like it.</p>
+        <ul class="steps">
+          <li class="step"><div class="step-num">1</div><div><div class="step-text">Scan any one unit on the pallet as a reference ID.</div></div></li>
+          <li class="step"><div class="step-num">2</div><div><div class="step-text">Enter the total number of units on that pallet (e.g., 80). The app finds that ID in the back end and backfills all associated production data.</div></div></li>
+          <li class="step"><div class="step-num">3</div><div><div class="step-text">Repeat pallet by pallet. Each pallet gets its own scan — the ID of the unit you scanned becomes the pallet ID so it can always be traced back.</div></div></li>
+        </ul>
+        <div class="warning"><strong>Scan pallet by pallet — not the whole truck at once.</strong> A truckload is rarely all alike. It may have different blocks, pack styles, or varieties across pallets. Scanning each pallet separately keeps those splits accurate. If you scan the entire truck as one entry, it all gets attributed to a single unit type from a single block, which will throw off receiving.</div>
+        <p style="font-size:13px;color:#666;margin-top:12px">You lose granularity with this method — you won't know which specific boxes are on which pallet. What you get is total pallet count and total box count. That's the trade-off for growers who don't track units to pallets.</p>
+      </div>
+      <div class="feature-media">
+        <div class="phone-frame">
+          <img src="images/Screenshot 2026-03-25 113626.png" alt="Ticket Not Found Locally - quantity entry">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 6: Sharing Load Summary -->
+<div class="section section-alt" id="sec-sharing">
+  <div class="container">
+    <div class="feature feature-reverse">
+      <div class="feature-text">
+        <div class="feature-label">Load Summary</div>
+        <h2>Share via QR code or PDF</h2>
+        <p>Once the load is built, long press it to pull up the QR code. It can be texted, shown on screen, or downloaded as a PDF.</p>
+        <ul class="steps">
+          <li class="step"><div class="step-num">1</div><div><div class="step-text">Long press the load and select <strong>QR Code</strong> or <strong>Download PDF</strong>.</div></div></li>
+          <li class="step"><div class="step-num">2</div><div>
+            <div class="step-text">The PDF shows all logistics at the top — driver details, employer of the fruit, crews represented, and destination.</div>
+            <div class="step-sub">Below that: the total number of field tickets (pallets). When field tickets are the same, they're grouped together. When there's a variation, they're broken out separately. Field ticket IDs are listed.</div>
+          </div></li>
+          <li class="step"><div class="step-num">3</div><div>
+            <div class="step-text">At the destination, the driver shows the QR code to the receiver. If they can't present it, receiving devices automatically show all loads destined for that location — no QR code needed.</div>
+            <div class="step-sub"><strong>Driver view:</strong> device-oriented — only sees loads they created or scanned.<br><strong>Receiver view:</strong> destination scoping — sees every load headed to their destination. This is set on the office side via permissions.</div>
+          </div></li>
+          <li class="step"><div class="step-num">4</div><div>
+            <div class="step-text">99% of the time, both drivers and receivers will live on the <strong>Loads</strong> page. If you need to look at a specific pallet, tap the <strong>Field Tickets</strong> tab to see every field ticket on the load — but most people won't need to go there often.</div>
+          </div></li>
+        </ul>
+        <div class="tip"><strong>Change status before leaving.</strong> Drivers must manually change the load status from <em>Loading</em> to <em>In Transit</em> when they leave the field — this starts the transit timer in the office tab.</div>
+      </div>
+      <div class="feature-media">
+        <div class="phone-group">
+          <div class="phone-frame">
+            <img src="images/Screenshot 2026-03-25 113508.png" alt="Load Ticket options — Edit, QR Code, Share PDF, Delete">
+          </div>
+          <div class="phone-frame">
+            <img src="images/image copy.png" alt="Load Ticket PDF showing logistics, crews, and splits">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 7: At the Destination -->
+<div class="section section-alt">
+  <div class="container">
+    <div class="feature feature-reverse">
+      <div class="feature-text">
+        <div class="feature-label">At the Destination</div>
+        <h2>What the receiver sees</h2>
+        <p>When a driver arrives, the goal is to show the QR code. The receiver scans it and the load pulls up instantly.</p>
+        <p>If the driver can't present the QR code, the receiving device shows every load headed to that destination automatically — no action needed from the driver. This is controlled by destination scoping set in the office.</p>
+        <div class="tip"><strong>Driver vs. receiver view.</strong> Drivers only see loads they created or came into contact with. Receivers see all loads destined for their location. Two different permissions, two different views of the same data.</div>
+      </div>
+      <div class="feature-media">
+        <div class="phone-group">
+          <div class="phone-frame">
+            <img src="images/Screenshot 2026-03-25 114329.png" alt="Load Ticket QR Code for sharing">
+          </div>
+          <div class="phone-frame">
+            <img src="images/image copy 2.png" alt="Loads page showing all loads destined for receiver location">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 8: Unit Search -->
+<div class="section">
+  <div class="container">
+    <div class="feature">
+      <div class="feature-text">
+        <div class="feature-label">Unit Search</div>
+        <h2>Trace any unit back to the field</h2>
+        <p>Scan any unit with a unique ID — bin, table grape box, strawberry box — to pull up its full production record: the employee who picked it, the crew, pick time, and any notes.</p>
+        <p>If receiving counted 60 but the production record shows 50, the discrepancy is immediately visible. Notes added here stay attached to the record and appear the next time the unit is scanned.</p>
+      </div>
+      <div class="feature-media">
+        <div class="phone-frame">
+          <img src="images/image copy 3.png" alt="Unit Search result showing production record details">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /tab-receiving -->
+
+<!-- ═══ OFFICE TAB ═══ -->
+<div id="tab-office" class="tab-panel" style="display:none">
+
+<div class="hero">
+  <div class="hero-label">Office</div>
+  <h1>Monitor Every Load from Field to Warehouse</h1>
+  <p>Used by receiving managers and ranch managers to track load status in real time, manage permissions, and catch discrepancies before they reach inventory.</p>
+</div>
+
+<!-- Section 8: Role Setup -->
+<div class="section section-alt" id="sec-office">
+  <div class="container">
+    <div class="feature">
+      <div class="feature-text">
+        <div class="feature-label">Role Setup</div>
+        <h2>Assigning receiving permissions</h2>
+        <p>In Settings under User Roles, scroll to the bottom. You will find two receiving permissions.</p>
+        <div style="margin:20px 0">
+          <div class="perm-row">
+            <div><div class="perm-name">Receiving</div><div class="perm-desc">Access to the receiving tab in the office. Read, write, or edit.</div></div>
+            <span class="perm-badge" style="background:#fce4ec;color:#c62828">Office tab</span>
+          </div>
+          <div class="perm-row">
+            <div><div class="perm-name">Receiving app</div><div class="perm-desc">Access to the Receiving App on mobile. Full access or no access.</div></div>
+            <span class="perm-badge" style="background:#e3f2fd;color:#0d47a1">Mobile app</span>
+          </div>
+        </div>
+        <p>Once the receiving app permission is enabled on a user, a scoping option appears on their profile. Set it based on their role.</p>
+      </div>
+      <div class="feature-media" style="flex:1 1 0;min-width:0">
+        <div style="border-radius:10px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,0.1);border:1px solid #e0e0e0">
+          <img src="images/image copy 4.png" style="width:100%;display:block">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 9: Permissions & Scoping -->
+<div class="section" id="sec-office-scoping">
+  <div class="container">
+    <div class="feature feature-reverse">
+      <div class="feature-text">
+        <div class="feature-label">Office Settings</div>
+        <h2>Permissions and scoping</h2>
+        <p>Control who can view which loads across the organization with role-based permissions and scoping.</p>
+        <div style="margin:20px 0">
+          <div class="perm-row">
+            <div><div class="perm-name">Receiving page</div><div class="perm-desc">Grants access to the receiving tab in the office</div></div>
+            <span class="perm-badge" style="background:#fce4ec;color:#c62828">Office tab</span>
+          </div>
+          <div class="perm-row">
+            <div><div class="perm-name">Receiving app</div><div class="perm-desc">Grants access to use the Receiving App on mobile</div></div>
+            <span class="perm-badge" style="background:#e3f2fd;color:#0d47a1">Field app</span>
+          </div>
+        </div>
+        <div class="scope-grid">
+          <div class="scope-card">
+            <div class="scope-badge" style="background:#fce4ec;color:#c62828">Device</div>
+            <h4>Driver</h4>
+            <p>Sees only loads created on their own device.</p>
+          </div>
+          <div class="scope-card">
+            <div class="scope-badge" style="background:#e3f2fd;color:#0d47a1">Destination</div>
+            <h4>Receiver</h4>
+            <p>Sees all loads headed to their assigned destination.</p>
+          </div>
+          <div class="scope-card">
+            <div class="scope-badge" style="background:#e8f5e9;color:#1b5e20">Location</div>
+            <h4>Ranch Manager</h4>
+            <p>Sees all loads departing from their assigned ranch, regardless of which driver created them. Supports site groups.</p>
+          </div>
+        </div>
+      </div>
+      <div class="feature-media">
+        <div class="phone-frame">
+          <img src="images/Screenshot 2026-03-25 114809.png" alt="Edit user profile with receiving settings">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 9: Status & Timeline -->
+<div class="section" id="sec-status">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px">
+      <div class="feature-label" style="text-align:center">Status Tracking</div>
+      <h2 style="font-size:26px;font-weight:700;color:#1a1a2e;margin-bottom:10px">Track every load from field to warehouse</h2>
+      <p style="font-size:14px;color:#555;max-width:600px;margin:0 auto">The receiving office tab provides a real-time view of every load across three views: <strong>Timeline</strong> (color-coded visual), <strong>List</strong> (grid format — better for high-volume operations with many drivers), and <strong>Discrepancy</strong>. Click into any load to see all pallets, box counts, pack styles, and crews.</p>
+    </div>
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dot r"></div>
+        <div class="browser-dot y"></div>
+        <div class="browser-dot g"></div>
+        <div class="browser-bar-url"></div>
+      </div>
+      <img src="images/Screenshot 2026-03-25 115657.png" alt="Status summary bar — Building, Loading, In Transit, Delayed, Received">
+    </div>
+    <div class="status-desc-row">
+      <div class="status-desc-item"><strong>Building</strong><br>First unit added to a field ticket — starts automatically</div>
+      <div class="status-desc-item"><strong>Loading</strong><br>Pallets actively being scanned onto the load</div>
+      <div class="status-desc-item"><strong>In Transit</strong><br>Manually triggered by the driver when leaving the field</div>
+      <div class="status-desc-item"><strong>Delayed</strong><br>Load exceeded expected transit time</div>
+      <div class="status-desc-item"><strong>Received</strong><br>Confirmed at destination</div>
+    </div>
+    <div style="margin-top:30px;max-width:750px;margin-left:auto;margin-right:auto">
+      <div class="browser-frame">
+        <div class="browser-bar">
+          <div class="browser-dot r"></div>
+          <div class="browser-dot y"></div>
+          <div class="browser-dot g"></div>
+          <div class="browser-bar-url"></div>
+        </div>
+        <img src="images/Screenshot 2026-03-25 115032.png" alt="Receiving office timeline view">
+      </div>
+    </div>
+    <div class="tip" style="margin-top:24px"><strong>Timeline tracks duration.</strong> Example: building started at 8:47 a.m., four pallets loaded in under a minute each, in transit for 33 minutes, received at 3:46 p.m. Group by driver, destination, pack style, or variety.</div>
+    <div class="tip" style="margin-top:10px"><strong>Flagging issues.</strong> If damage or a discrepancy is found, add a note from either the office tab or the mobile app. A red exclamation mark appears on the load record, visible to anyone with access.</div>
+  </div>
+</div>
+
+<!-- Section 10: Discrepancy -->
+<div class="section section-alt">
+  <div class="container">
+    <div style="max-width:700px">
+      <div class="feature-label">Discrepancy</div>
+      <h2 style="font-size:26px;font-weight:700;color:#1a1a2e;margin-bottom:14px">Catch mismatches before they reach inventory</h2>
+      <p style="font-size:14px;color:#555;line-height:1.8;margin-bottom:16px">The discrepancy page identifies mismatches between what was sent from the field and what was received. This feeds directly into sellable inventory counts — errors have immediate downstream effects.</p>
+      <div class="critical"><strong>Inventory impact.</strong> The receiving process feeds directly into what the grower can sell. Do not disrupt this process — fruit needs to reach the cooler as fast as possible.</div>
+      <ul class="steps">
+        <li class="step"><div class="step-num">1</div><div><div class="step-text">Confirm how many crews the driver is collecting from before pickup.</div></div></li>
+        <li class="step"><div class="step-num">2</div><div><div class="step-text">Ensure only one receiving process per driver at a time. Multiple simultaneous processes prevent proper reconciliation.</div></div></li>
+        <li class="step"><div class="step-num">3</div><div><div class="step-text">For some table grape growers, each tractor driver handles two crews within a block — a consistent, trackable setup.</div></div></li>
+      </ul>
+      <div class="warning" style="margin-top:16px"><strong>Work in progress.</strong> The discrepancy page is actively being developed. The core goal — surfacing mismatches at the field ticket level — is in place, but the full workflow is not yet finalized.</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /tab-office -->
+
+<script>
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
+  document.getElementById('tab-' + name).style.display = 'block';
+  document.querySelectorAll('.pt-nav button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
+</body>
+</html>
